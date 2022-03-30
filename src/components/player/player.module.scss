@@ -1,0 +1,19 @@
+.container {
+    height: 80px;
+    width: 100vw;
+    padding: var(--spacing-l);
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    background-color: black;
+}
+
+@supports ( (-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+    .container {
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}

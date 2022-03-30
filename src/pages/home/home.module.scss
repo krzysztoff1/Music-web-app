@@ -1,0 +1,13 @@
+.section__container {
+    overflow-y: scroll;
+    margin: var(--spacing-l) 0;
+    max-height: 100vh;
+}
+
+.section__list {
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: var(--spacing-m) var(--spacing-m) var(--spacing-m) 0;
+}
