@@ -1,0 +1,69 @@
+.sidebar {
+    width: fit-content;
+    height: 100vh;
+    padding: var(--spacing-m);
+    background-color: black;
+}
+
+@media only screen and (max-width: 600px) {
+    .sidebar {
+        position: fixed;
+        z-index: 100;
+    }
+}
+
+@supports ( (-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+    .sidebar {
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        background-color: rgba(0, 0, 0, 0.1);
+    }
+}
+
+.logo {
+    height: 36px;
+}
+
+.list__container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.list__button {
+    transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+    padding: var(--spacing-m) var(--spacing-l);
+    text-align: left;
+    background-color: transparent;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    -webkit-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -moz-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -ms-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -o-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+    &:hover {
+        background-color: var(--main-transp);
+        color: black;
+    }
+}
+
+.toggle__button {
+    display: none;
+}
+
+@media only screen and (max-width: 600px) {
+    .toggle__button {
+        z-index: 101;
+        display: block;
+        position: fixed;
+        left: 10px;
+        top: 10px;
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
