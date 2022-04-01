@@ -1,13 +1,16 @@
+.main {
+    overflow: auto;
+}
+
 .section__container {
-    overflow-y: scroll;
     margin: var(--spacing-l) 0;
     max-height: 100vh;
 }
 
 .section__list {
-    overflow-y: scroll;
+    overflow: auto;
     display: flex;
-    flex-wrap: wrap;
+    // flex-wrap: wrap;
     gap: 1rem;
     padding: var(--spacing-m) var(--spacing-m) var(--spacing-m) 0;
 }

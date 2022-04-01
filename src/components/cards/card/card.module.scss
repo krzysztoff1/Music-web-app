@@ -1,4 +1,5 @@
 .container {
+    flex-shrink: 0;
     height: 10rem;
     width: 10rem;
     position: relative;
@@ -10,8 +11,6 @@
     background-position: center;
     background-size: contain;
 }
-
-.text__container {}
 
 .title {
     font-size: 1rem;

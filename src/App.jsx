@@ -6,10 +6,9 @@ import Home from "./pages/home/Home";
 import Player from "./components/player/Player";
 import styles from "./app.module.scss";
 import { nanoid } from "nanoid";
-import { atomWithStorage } from "jotai/utils";
+import { accessTokenAtom } from "./atoms/accessTokenAtom";
 
 const codeAtom = atom("");
-const accessTokenAtom = atom("");
 
 function App() {
   const [code, setCode] = useAtom(codeAtom);
@@ -32,27 +31,19 @@ function App() {
     setAccessToken(access_token);
   }, [window.location]);
 
-  const getSecrets = () => {
-    var options = {
-      type: "POST",
-      url: "https://accounts.spotify.com/api/token",
-      form: {
-        code: code,
-        redirect_uri: redirect_uri,
-        grant_type: "authorization_code",
-      },
-      headers: {
-        Authorization:
-          "Basic " + (client_id + ":" + client_secret).toString("base64"),
-      },
+  useEffect(() => {
+    if (!accessToken) return;
+    const get = async () => {
+      const response = await fetch("https://api.spotify.com/v1/me", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+      const user = await response.json();
     };
-
-    fetch(options)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => console.log(e));
-  };
+    get();
+  }, [accessToken]);
 
   const requestAuthorization = () => {
     const scope = "user-read-private user-read-email";
@@ -65,31 +56,16 @@ function App() {
     setLoginUrl(url);
   };
 
-  useEffect(() => {
-    if (!accessToken) return;
-    const get = async () => {
-      const response = await fetch("https://api.spotify.com/v1/me", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + accessToken,
-        },
-      });
-      const user = await response.json();
-      console.log(user);
-    };
-    get();
-  }, [accessToken]);
-
   if (!accessToken) return <a href={loginUrl}>Login to spotify</a>;
 
   return (
     <main className={styles.layout}>
       <section className={styles.main}>
-        <Sidebar />
-        <p>{accessToken}</p>
         <BrowserRouter>
+          <Sidebar />
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route exact path="/" element={<Home />} />
+            <Route path="/callback" element={<Home />} />
           </Routes>
         </BrowserRouter>
       </section>

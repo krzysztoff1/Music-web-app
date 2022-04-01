@@ -1,11 +1,12 @@
+import { Link } from "react-router-dom";
 import styles from "./sidebar.module.scss";
 
 const Sidebar = () => {
   const pages = [
-    { title: "Home", icon: <></> },
-    { title: "Discover", icon: <></> },
-    { title: "Podcasts", icon: <></> },
-    { title: "Radio", icon: <></> },
+    { title: "Home", icon: <></>, url: "/" },
+    { title: "Discover", icon: <></>, url: "/" },
+    { title: "Podcasts", icon: <></>, url: "/" },
+    { title: "Radio", icon: <></>, url: "/" },
   ];
 
   return (
@@ -26,13 +27,14 @@ const Sidebar = () => {
       <nav className={styles.sidebar}>
         <div className={styles.list__container}>
           {pages.map((item) => (
-            <button
+            <Link
+              to={item.url}
               key={item.title}
               type="button"
               className={styles.list__button}
             >
               {item.title}
-            </button>
+            </Link>
           ))}
         </div>
       </nav>
