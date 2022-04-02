@@ -1,6 +1,6 @@
 import { atom } from "jotai";
 
-export const playingAtom = atom("none");
+export const playingAtom = atom();
 
 export const updatePlaying = atom(
   (get) => get(playingAtom),

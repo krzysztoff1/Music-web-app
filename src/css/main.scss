@@ -232,6 +232,10 @@ body {
         flex-direction: column;
         justify-content: space-between;
     }
+    .truncate {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 // @import "./libs";

@@ -16,8 +16,12 @@ export const runFetchGenresAtom = atom(
             headers: { Authorization: "Bearer " + get(accessTokenAtom) },
           }
         );
-        const data = await response.json();
-        set(fetchGenresAtom, { loading: false, error: null, data });
+        if (response.ok) {
+          const data = await response.json();
+          set(fetchGenresAtom, { loading: false, error: null, data });
+          return;
+        }
+        throw new Error("Something went wrong.");
       } catch (error) {
         set(fetchGenresAtom, { loading: false, error, data: null });
       }

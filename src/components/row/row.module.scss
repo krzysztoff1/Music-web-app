@@ -1,0 +1,23 @@
+.row {
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 20px 40vw auto;
+    grid-column-gap: var(--spacing-m);
+    width: 100%;
+    padding: var(--spacing-s);
+    transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -moz-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -ms-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -o-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    &:hover {
+        background-color: var(--white-10);
+    }
+    .track__index {
+        height: fit-content;
+    }
+}

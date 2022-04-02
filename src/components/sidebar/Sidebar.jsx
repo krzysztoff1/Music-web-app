@@ -4,7 +4,7 @@ import styles from "./sidebar.module.scss";
 const Sidebar = () => {
   const pages = [
     { title: "Home", icon: <></>, url: "/" },
-    { title: "Discover", icon: <></>, url: "/" },
+    { title: "Saved Tracks", icon: <></>, url: "/saved_tracks" },
     { title: "Podcasts", icon: <></>, url: "/" },
     { title: "Radio", icon: <></>, url: "/" },
   ];

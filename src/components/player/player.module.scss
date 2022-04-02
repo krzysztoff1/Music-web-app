@@ -4,10 +4,34 @@
     padding: var(--spacing-l);
     display: flex;
     justify-content: space-between;
-}
-
-.container {
     background-color: black;
+    .item__container {
+        width: calc(100% / 3);
+        .item__left {
+            display: flex;
+            justify-items: start;
+            .cover {
+                padding: var(--spacing-s);
+                width: 60px;
+                height: 60px;
+                border-radius: 100x;
+                -webkit-border-radius: 100x;
+                -moz-border-radius: 100x;
+                -ms-border-radius: 100x;
+                -o-border-radius: 100x;
+            }
+            div {
+                width: 100%;
+                padding-right: var(--spacing-xl);
+            }
+        }
+        .item__center {
+            .controls {
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
 }
 
 @supports ( (-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
