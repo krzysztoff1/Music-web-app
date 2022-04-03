@@ -11,28 +11,30 @@ const Home = () => {
   const [savedTracks] = useAtom(runFetchSavedTracks);
 
   return (
-    <main className={styles.main}>
-      <section className={styles.section__container}>
-        <h4>Categories</h4>
-        <div className={styles.section__list}>
-          {categories.data?.categories?.items.map((category) => (
-            <Card key={category.id} image={category.icons[0].url} />
-          ))}
-        </div>
-      </section>
-      <section className={styles.section__container}>
-        <h4>Saved tracks</h4>
-        <div className={styles.section__list}>
-          {savedTracks.data?.items.map((item) => (
-            <TrackCard
-              key={item.track.id}
-              image={item.track.album.images[0].url}
-              data={item}
-            />
-          ))}
-        </div>
-      </section>
-    </main>
+    <Suspense fallback={<>Loading...</>}>
+      <main className={styles.main}>
+        <section className={styles.section__container}>
+          <h4>Categories</h4>
+          <div className={styles.section__list}>
+            {categories.data?.categories?.items.map((category) => (
+              <Card key={category.id} image={category.icons[0].url} />
+            ))}
+          </div>
+        </section>
+        <section className={styles.section__container}>
+          <h4>Saved tracks</h4>
+          <div className={styles.section__list}>
+            {savedTracks.data?.items.map((item) => (
+              <TrackCard
+                key={item.track.id}
+                image={item.track.album.images[0].url}
+                data={item}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
+    </Suspense>
   );
 };
 

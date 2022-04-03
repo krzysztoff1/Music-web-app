@@ -3,14 +3,20 @@ import { playingAtom } from "@/atoms/playerAtom";
 import { useAtom } from "jotai";
 import { FaPlay, FaPause } from "react-icons/fa";
 import styles from "./player.module.scss";
+import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
 
 const Player = () => {
+  const [controls, useControls] = useAtom(playAndQueueAtom);
   const [track] = useAtom(playingAtom);
   const [currentTime, setCurrentTime] = useState(0);
   const [playing, setPlaying] = useState(false);
   const audioRef = useRef();
   const progressBarRef = useRef();
   const totalTime = 30;
+
+  useEffect(() => {
+    console.log(controls);
+  }, [controls]);
 
   useEffect(() => {
     if (!track) return;
@@ -40,7 +46,7 @@ const Player = () => {
             <>
               <img
                 className={styles.cover}
-                src={track.album.images[1].url}
+                src={track.album?.images[1].url}
                 alt="cover"
               />
               <div>

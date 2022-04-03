@@ -21,9 +21,9 @@ function App() {
     requestAuthorization();
   }, []);
 
-  //? temporary
   useEffect(() => {
-    let access_token = window.location.hash.substring(
+    if (!window.location.hash.startsWith("#access_")) return;
+    const access_token = window.location.hash.substring(
       window.location.hash.indexOf("=") + 1,
       window.location.hash.lastIndexOf("&token_")
     );
