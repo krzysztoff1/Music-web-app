@@ -1,14 +1,13 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import Sidebar from "./components/sidebar/Sidebar";
-import { atom, useAtom } from "jotai";
-import Home from "./pages/home/Home";
-import Player from "./components/player/Player";
 import styles from "./app.module.scss";
 import { nanoid } from "nanoid";
+import { Route, Routes } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAtom } from "jotai";
+import Sidebar from "./components/sidebar/Sidebar";
+import Home from "./pages/home/Home";
+import Player from "./components/player/Player";
 import { accessTokenAtom } from "./atoms/accessTokenAtom";
 import LogIn from "./components/login/LogIn";
-import { Login } from "@mui/icons-material";
 import SavedTracks from "./pages/savedTracks/SavedTracks";
 
 function App() {
@@ -18,17 +17,25 @@ function App() {
   const client_id = import.meta.env.VITE_CLIENT_ID;
 
   useEffect(() => {
+    console.log(accessToken);
+    console.log(accessToken?.expire < new Date());
     requestAuthorization();
   }, []);
 
+  // temporary
   useEffect(() => {
     if (!window.location.hash.startsWith("#access_")) return;
+
     const access_token = window.location.hash.substring(
       window.location.hash.indexOf("=") + 1,
       window.location.hash.lastIndexOf("&token_")
     );
-    setAccessToken(access_token);
-  }, [window.location]);
+    const expireDate = new Date().getTime() + 1 * 60 * 60 * 1000;
+    setAccessToken({
+      token: access_token,
+      expire: expireDate,
+    });
+  }, [JSON.stringify(window.location)]);
 
   const requestAuthorization = () => {
     const scope = "user-read-private user-read-email";
@@ -41,7 +48,8 @@ function App() {
     setLoginUrl(url);
   };
 
-  if (!accessToken) return <LogIn loginUrl={loginUrl} />;
+  if (!accessToken || accessToken.expire < new Date())
+    return <LogIn loginUrl={loginUrl} />;
 
   return (
     <main className={styles.layout}>

@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import styles from "./trackCard.module.scss";
 import { useAtom } from "jotai";
-import { playingAtom, updatePlaying } from "@/atoms/playerAtom";
-import { useEffect } from "react";
+import { playingAtom } from "@/atoms/playerAtom";
 
 const TrackCard = (props) => {
   const [song, setSong] = useAtom(playingAtom);

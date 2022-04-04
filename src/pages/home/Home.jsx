@@ -1,5 +1,5 @@
-import { Suspense, useEffect } from "react";
-import { atom, useAtom } from "jotai";
+import { Suspense } from "react";
+import { useAtom } from "jotai";
 import Card from "@/components/cards/card/Card";
 import styles from "./home.module.scss";
 import { runFetchGenresAtom } from "@/atoms/genresAtom";
@@ -14,7 +14,7 @@ const Home = () => {
     <Suspense fallback={<>Loading...</>}>
       <main className={styles.main}>
         <section className={styles.section__container}>
-          <h4>Categories</h4>
+          <h4 className={styles.section__title}>Categories</h4>
           <div className={styles.section__list}>
             {categories.data?.categories?.items.map((category) => (
               <Card key={category.id} image={category.icons[0].url} />
@@ -22,7 +22,7 @@ const Home = () => {
           </div>
         </section>
         <section className={styles.section__container}>
-          <h4>Saved tracks</h4>
+          <h4 className={styles.section__title}>Saved tracks</h4>
           <div className={styles.section__list}>
             {savedTracks.data?.items.map((item) => (
               <TrackCard

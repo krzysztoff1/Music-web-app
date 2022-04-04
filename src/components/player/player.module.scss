@@ -14,11 +14,11 @@
                 padding: var(--spacing-s);
                 width: 60px;
                 height: 60px;
-                border-radius: 100x;
-                -webkit-border-radius: 100x;
-                -moz-border-radius: 100x;
-                -ms-border-radius: 100x;
-                -o-border-radius: 100x;
+                border-radius: 10px;
+                -webkit-border-radius: 10px;
+                -moz-border-radius: 10px;
+                -ms-border-radius: 10px;
+                -o-border-radius: 10px;
             }
             div {
                 width: 100%;
@@ -27,7 +27,9 @@
         }
         .item__center {
             .controls {
+                padding: var(--spacing-s);
                 display: flex;
+                gap: var(--spacing-m);
                 justify-content: center;
             }
         }
@@ -40,4 +42,12 @@
         backdrop-filter: blur(20px);
         background-color: rgba(0, 0, 0, 0.1);
     }
+}
+
+.draggable {
+    width: 100%;
+}
+
+.handle {
+    width: fit-content;
 }

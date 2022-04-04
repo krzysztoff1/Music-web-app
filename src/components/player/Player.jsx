@@ -1,39 +1,31 @@
 import { useEffect, useRef, useState } from "react";
-import { playingAtom } from "@/atoms/playerAtom";
 import { useAtom } from "jotai";
-import { FaPlay, FaPause } from "react-icons/fa";
+import { FaPlay, FaPause, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import styles from "./player.module.scss";
 import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
+import Draggable, { DraggableCore } from "react-draggable";
 
 const Player = () => {
-  const [controls, useControls] = useAtom(playAndQueueAtom);
-  const [track] = useAtom(playingAtom);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [data, setData] = useAtom(playAndQueueAtom);
   const [playing, setPlaying] = useState(false);
+  const [deltaX, setDeltaX] = useState();
   const audioRef = useRef();
   const progressBarRef = useRef();
+  const nodeRef = useRef();
   const totalTime = 30;
 
   useEffect(() => {
-    console.log(controls);
-  }, [controls]);
+    console.log(data);
+    console.log(data.currentTrack);
+    console.log("====================================");
+    if (!data.tempPlaylist.length) return;
+    console.log(data.tempPlaylist[data.currentTrack].track.name);
+    console.log("====================================");
+  }, [data]);
 
-  useEffect(() => {
-    if (!track) return;
-    setPlaying(false);
-    audioRef.current.currentTime = 0;
-    progressBarRef.current.value = 0;
-    setPlaying(true);
-  }, [track]);
-
-  useEffect(() => {
-    if (!track) return;
-    if (playing) {
-      audioRef.current.play();
-      return;
-    }
-    audioRef.current.pause();
-  }, [playing]);
+  const nextTrack = () => {
+    setData({ currentTrack: 2 });
+  };
 
   const changeRange = () =>
     (audioRef.current.currentTime = progressBarRef.current.value);
@@ -42,16 +34,20 @@ const Player = () => {
     <footer className={styles.container}>
       <div className={styles.item__container}>
         <div className={styles.item__left}>
-          {track && (
+          {data.tempPlaylist && (
             <>
-              <img
+              {/* <img
                 className={styles.cover}
-                src={track.album?.images[1].url}
+                src={data.currentTrack?.album.images[1].url}
                 alt="cover"
-              />
+              /> */}
               <div>
-                <b className="truncate">{track.name}</b>
-                <p className="truncate">{track.artists[0].name}</p>
+                <b className="truncate">
+                  {data.tempPlaylist[data.currentTrack]?.track.name}
+                </b>
+                <p className="truncate">
+                  {data.tempPlaylist[data.currentTrack]?.track.artists[0].name}
+                </p>
               </div>
             </>
           )}
@@ -59,25 +55,39 @@ const Player = () => {
       </div>
       <div className={styles.item__container}>
         <div className={styles.item__center}>
-          <audio
+          {/* <audio
             ref={audioRef}
-            src={track?.preview_url}
+            src={data.currentTrack?.preview_url}
             preload="auto"
-            volume="1"
-          />
+            volume={0.1}
+          /> */}
           <div className={styles.controls}>
+            <button type="button">
+              <FaArrowLeft onClick={nextTrack} />
+            </button>
             <button onClick={() => setPlaying((state) => !state)} type="button">
               {!playing ? <FaPlay /> : <FaPause />}
             </button>
+            <button type="button">
+              <FaArrowRight onClick={nextTrack} />
+            </button>
           </div>
-          <input
-            type="range"
-            defaultValue="0"
-            ref={progressBarRef}
-            onChange={changeRange}
-            max={totalTime}
-            step="0.1"
-          />
+          {/* <Draggable
+            nodeRef={nodeRef}
+            axis="x"
+            handle=".handle"
+            defaultPosition={{ x: 0, y: 0 }}
+            position={null}
+            grid={[150, 150]}
+            scale={1}
+            onDrag={() => handleDrag}
+          >
+            <div>
+              <div ref={nodeRef} className={("handle", styles.handle)}>
+                Drag from
+              </div>
+            </div>
+          </Draggable> */}
         </div>
       </div>
       <div className={styles.item__container}></div>

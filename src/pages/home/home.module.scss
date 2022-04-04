@@ -1,5 +1,5 @@
 .main {
-    overflow: auto;
+    overflow: hidden;
 }
 
 .section__container {
@@ -8,9 +8,8 @@
 }
 
 .section__list {
-    overflow: auto;
+    overflow-x: scroll;
     display: flex;
-    // flex-wrap: wrap;
     gap: 1rem;
     padding: var(--spacing-m) var(--spacing-m) var(--spacing-m) 0;
 }
