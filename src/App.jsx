@@ -13,12 +13,10 @@ import SavedTracks from "./pages/savedTracks/SavedTracks";
 function App() {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
   const [loginUrl, setLoginUrl] = useState("");
-  const redirect_uri = "http://localhost:3000/callback/";
+  const redirect_uri = `${window.location.origin}/callback/`;
   const client_id = import.meta.env.VITE_CLIENT_ID;
 
   useEffect(() => {
-    console.log(accessToken);
-    console.log(accessToken?.expire < new Date());
     requestAuthorization();
   }, []);
 
@@ -30,7 +28,9 @@ function App() {
       window.location.hash.indexOf("=") + 1,
       window.location.hash.lastIndexOf("&token_")
     );
+
     const expireDate = new Date().getTime() + 1 * 60 * 60 * 1000;
+
     setAccessToken({
       token: access_token,
       expire: expireDate,

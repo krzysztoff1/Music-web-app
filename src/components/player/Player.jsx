@@ -3,32 +3,63 @@ import { useAtom } from "jotai";
 import { FaPlay, FaPause, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import styles from "./player.module.scss";
 import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
-import Draggable, { DraggableCore } from "react-draggable";
+import { controlCurrentlyPlaying } from "@/atoms/currentlyPlayingAtom";
 
 const Player = () => {
-  const [data, setData] = useAtom(playAndQueueAtom);
+  const [data] = useAtom(playAndQueueAtom);
   const [playing, setPlaying] = useState(false);
-  const [deltaX, setDeltaX] = useState();
+  const [currentlyPlaying, setCurrentlyPlaying] = useAtom(
+    controlCurrentlyPlaying
+  );
   const audioRef = useRef();
-  const progressBarRef = useRef();
-  const nodeRef = useRef();
-  const totalTime = 30;
+  const progressBar = useRef();
 
   useEffect(() => {
-    console.log(data);
-    console.log(data.currentTrack);
-    console.log("====================================");
-    if (!data.tempPlaylist.length) return;
-    console.log(data.tempPlaylist[data.currentTrack].track.name);
-    console.log("====================================");
-  }, [data]);
+    if (!data.tempPlaylist[currentlyPlaying]?.track.preview_url) {
+      pause();
+      audioRef.current.src = undefined;
+      return;
+    }
+    if (!playing) {
+      pause();
+      return;
+    }
+    play();
+  }, [currentlyPlaying]);
 
-  const nextTrack = () => {
-    setData({ currentTrack: 2 });
+  const updateProgress = () => {
+    progressBar.current.value = audioRef.current.currentTime;
   };
 
-  const changeRange = () =>
-    (audioRef.current.currentTime = progressBarRef.current.value);
+  const handlePlay = () => {
+    if (playing || !data.tempPlaylist[currentlyPlaying]?.track.preview_url) {
+      pause();
+      return;
+    }
+    play();
+  };
+
+  const play = () => {
+    setPlaying(true);
+    audioRef.current.play();
+  };
+
+  const pause = () => {
+    setPlaying(false);
+    audioRef.current.pause();
+  };
+
+  const prevTrack = () => {
+    if (currentlyPlaying + 1 < data.tempPlaylist.length) {
+      setCurrentlyPlaying({ type: "next" });
+    }
+  };
+
+  const nextTrack = () => {
+    if (currentlyPlaying > 0) {
+      setCurrentlyPlaying({ type: "prev" });
+    }
+  };
 
   return (
     <footer className={styles.container}>
@@ -36,17 +67,22 @@ const Player = () => {
         <div className={styles.item__left}>
           {data.tempPlaylist && (
             <>
-              {/* <img
+              <img
                 className={styles.cover}
-                src={data.currentTrack?.album.images[1].url}
+                src={
+                  currentlyPlaying
+                    ? data.tempPlaylist[currentlyPlaying]?.track.album.images[2]
+                        .url
+                    : "https://deepgrooves.eu/wp-content/uploads/2020/08/Green-8499-1024x1024.png"
+                }
                 alt="cover"
-              /> */}
+              />
               <div>
                 <b className="truncate">
-                  {data.tempPlaylist[data.currentTrack]?.track.name}
+                  {data.tempPlaylist[currentlyPlaying]?.track.name}
                 </b>
                 <p className="truncate">
-                  {data.tempPlaylist[data.currentTrack]?.track.artists[0].name}
+                  {data.tempPlaylist[currentlyPlaying]?.track.artists[0].name}
                 </p>
               </div>
             </>
@@ -55,39 +91,25 @@ const Player = () => {
       </div>
       <div className={styles.item__container}>
         <div className={styles.item__center}>
-          {/* <audio
+          <audio
             ref={audioRef}
-            src={data.currentTrack?.preview_url}
+            src={data.tempPlaylist[currentlyPlaying]?.track.preview_url}
             preload="auto"
-            volume={0.1}
-          /> */}
+            volume="0.1"
+            onTimeUpdate={updateProgress}
+          />
           <div className={styles.controls}>
             <button type="button">
               <FaArrowLeft onClick={nextTrack} />
             </button>
-            <button onClick={() => setPlaying((state) => !state)} type="button">
+            <button onClick={handlePlay} type="button">
               {!playing ? <FaPlay /> : <FaPause />}
             </button>
             <button type="button">
-              <FaArrowRight onClick={nextTrack} />
+              <FaArrowRight onClick={prevTrack} />
             </button>
           </div>
-          {/* <Draggable
-            nodeRef={nodeRef}
-            axis="x"
-            handle=".handle"
-            defaultPosition={{ x: 0, y: 0 }}
-            position={null}
-            grid={[150, 150]}
-            scale={1}
-            onDrag={() => handleDrag}
-          >
-            <div>
-              <div ref={nodeRef} className={("handle", styles.handle)}>
-                Drag from
-              </div>
-            </div>
-          </Draggable> */}
+          <input ref={progressBar} type="range" />
         </div>
       </div>
       <div className={styles.item__container}></div>
