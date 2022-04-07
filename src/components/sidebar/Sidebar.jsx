@@ -1,13 +1,21 @@
+import { runUsersPlaylists } from "@/atoms/usersPlaylists";
+import { data } from "autoprefixer";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./sidebar.module.scss";
 
 const Sidebar = () => {
+  const [playlists] = useAtom(runUsersPlaylists);
+
   const pages = [
     { title: "Home", icon: <></>, url: "/" },
     { title: "Saved Tracks", icon: <></>, url: "/saved_tracks" },
     { title: "Podcasts", icon: <></>, url: "/" },
     { title: "Radio", icon: <></>, url: "/" },
   ];
+
+  useEffect(() => console.log(playlists), [playlists]);
 
   return (
     <>
@@ -34,6 +42,13 @@ const Sidebar = () => {
               className={styles.list__button}
             >
               {item.title}
+            </Link>
+          ))}
+        </div>
+        <div>
+          {playlists.data?.items.map((item) => (
+            <Link to={`/playlist/${item.id}`} key={item.id}>
+              {item.name}
             </Link>
           ))}
         </div>

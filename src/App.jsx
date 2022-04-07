@@ -3,12 +3,10 @@ import { nanoid } from "nanoid";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAtom } from "jotai";
-import Sidebar from "./components/sidebar/Sidebar";
-import Home from "./pages/home/Home";
-import Player from "./components/player/Player";
 import { accessTokenAtom } from "./atoms/accessTokenAtom";
-import LogIn from "./components/login/LogIn";
-import SavedTracks from "./pages/savedTracks/SavedTracks";
+
+import { LogIn, Player, Sidebar } from "./components";
+import { SavedTracks, Artists, Home } from "./pages";
 
 function App() {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
@@ -59,6 +57,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route path="/callback" element={<Home />} />
           <Route path="/saved_tracks" element={<SavedTracks />} />
+          <Route path="/artists/:id" element={<Artists />} />
         </Routes>
       </section>
       <Player />

@@ -1,0 +1,15 @@
+.main {
+    width: 100%;
+    padding: var(--spacing-m);
+    .header {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: flex-end;
+        gap: var(--spacing-xl);
+        .cover {
+            max-width: 10rem;
+            object-fit: cover;
+        }
+    }
+}

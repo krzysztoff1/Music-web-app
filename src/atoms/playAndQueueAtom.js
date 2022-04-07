@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { currentPlaylistAtom } from "./currentPlaylistAtom";
 
 export const playAndQueueAtom = atom({
   currentTrack: {},

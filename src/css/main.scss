@@ -2,15 +2,15 @@
 :root {
     --main-bg: hsl(0, 0%, 7%);
     --input-bg: hsl(240, 10%, 19%);
-    --main: #5eead4;
-    --main-transp: #ccfbf18c;
+    --main: #0be881;
+    --main-transp: #49d49d;
     --sec: hsl(204, 100%, 50%);
     --sec-transp: hsla(204, 100%, 50%, 0.2);
     --white: hsl(0, 0%, 100%);
     --white-10: hsla(0, 0%, 100%, 0.1);
     --white-20: hsla(0, 0%, 100%, 0.2);
     --white-30: hsla(0, 0%, 100%, 0.3);
-    --white-50: hsla(0, 23%, 90%, 0.5);
+    --white-50: #ebe0e080;
     --white-60: hsla(0, 0%, 100%, 0.6);
     --white-75: hsla(0, 0%, 100%, 0.75);
     --gradient: linear-gradient(to right, var(--sec), var(--main));
@@ -68,7 +68,6 @@ body {
     h5 {
         color: var(--white);
         font-weight: 600;
-        text-transform: uppercase;
         letter-spacing: 2px;
     }
     h1 {

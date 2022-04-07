@@ -1,0 +1,65 @@
+.row {
+    border-radius: 5px;
+    display: grid;
+    grid-template-columns: 20px 40vw auto 2rem;
+    grid-column-gap: var(--spacing-m);
+    width: 100%;
+    padding: var(--spacing-s);
+    transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -moz-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -ms-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -o-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    &:hover {
+        background-color: var(--white-10);
+    }
+    .track__index {
+        color: var(--white-10);
+        height: fit-content;
+    }
+    .animation__container {
+        display: flex;
+        align-items: flex-end;
+        gap: 2px;
+        .animation__column {
+            width: 4px;
+            height: 100%;
+            background-color: var(--main);
+            border-radius: 1px;
+            -webkit-border-radius: 1px;
+            -moz-border-radius: 1px;
+            -ms-border-radius: 1px;
+            -o-border-radius: 1px;
+        }
+         :nth-child(1) {
+            animation: animation 0.424s infinite;
+            -webkit-animation: animation 0.424s infinite;
+        }
+         :nth-child(2) {
+            animation: animation 0.645s infinite;
+            -webkit-animation: animation 0.645s infinite;
+        }
+         :nth-child(3) {
+            animation: animation 0.55s infinite;
+            -webkit-animation: animation 0.55s infinite;
+        }
+    }
+    .more {
+         :hover {
+            background-color: var(--main);
+        }
+    }
+}
+
+@keyframes animation {
+    from {
+        height: 20%;
+    }
+    to {
+        height: 100%;
+    }
+}
