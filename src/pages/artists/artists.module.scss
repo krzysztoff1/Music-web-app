@@ -1,15 +1,44 @@
 .main {
-    width: 100%;
-    padding: var(--spacing-m);
+    overflow: hidden;
+    overflow: auto;
+    position: relative;
     .header {
         width: 100%;
         display: flex;
         justify-content: start;
+        margin-bottom: var(--spacing-m);
         align-items: flex-end;
+        padding-top: var(--spacing-xl);
         gap: var(--spacing-xl);
+        position: relative;
         .cover {
-            max-width: 10rem;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            z-index: 0;
         }
+        .header__text {
+            z-index: 20;
+            width: 100%;
+            padding-top: 10rem;
+            padding: 10rem var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+        }
+    }
+    .list__section {
+        padding: var(--spacing-xl);
+        .list__section__subtitle {
+            margin-bottom: var(--spacing-m);
+        }
+    }
+    .cards__container {
+        gap: var(--spacing-m);
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: flex-start;
     }
 }

@@ -15,11 +15,30 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     &:hover {
-        background-color: var(--white-10);
+        background-color: var(--white-30);
     }
-    .track__index {
-        color: var(--white-10);
-        height: fit-content;
+    .track__index__container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .track__index {
+            color: var(--white-10);
+            height: fit-content;
+        }
+    }
+    .track__name__container,
+    .track__artist__container {
+        width: 100%;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        .track__name,
+        .track__artist {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
     .animation__container {
         display: flex;

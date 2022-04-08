@@ -1,5 +1,5 @@
+import { FaHome, FaHeart, FaPodcast, FaSearch } from "react-icons/fa";
 import { runUsersPlaylists } from "@/atoms/usersPlaylists";
-import { data } from "autoprefixer";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -9,13 +9,11 @@ const Sidebar = () => {
   const [playlists] = useAtom(runUsersPlaylists);
 
   const pages = [
-    { title: "Home", icon: <></>, url: "/" },
-    { title: "Saved Tracks", icon: <></>, url: "/saved_tracks" },
-    { title: "Podcasts", icon: <></>, url: "/" },
-    { title: "Radio", icon: <></>, url: "/" },
+    { title: "Home", icon: <FaHome />, url: "/" },
+    { title: "Saved Tracks", icon: <FaHeart />, url: "/saved_tracks" },
+    { title: "Podcasts", icon: <FaPodcast />, url: "/" },
+    { title: "Search", icon: <FaSearch />, url: "/search" },
   ];
-
-  useEffect(() => console.log(playlists), [playlists]);
 
   return (
     <>
@@ -41,16 +39,24 @@ const Sidebar = () => {
               type="button"
               className={styles.list__button}
             >
+              <div className={styles.list__icon}>{item.icon}</div>
               {item.title}
             </Link>
           ))}
+          <hr className={styles.divider} />
         </div>
         <div>
-          {playlists.data?.items.map((item) => (
-            <Link to={`/playlist/${item.id}`} key={item.id}>
-              {item.name}
-            </Link>
-          ))}
+          <section className={styles.playlists__wrapper}>
+            {playlists.data?.items.map((item) => (
+              <Link
+                key={item.id}
+                to={`/playlist/${item.id}`}
+                className={styles.playlists__link}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </section>
         </div>
       </nav>
     </>

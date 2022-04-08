@@ -1,34 +1,66 @@
 import { useAtom } from "jotai";
 import { runFetchGenresAtom } from "@/atoms/genresAtom";
-import { runFetchSavedTracks } from "@/atoms/savedTracksAtom";
-import { playingAtom } from "@/atoms/playerAtom";
 import { updatePlayAndQueueAtom } from "@/atoms/playAndQueueAtom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
-import { currentlyPlayingAtom } from "@/atoms/currentlyPlayingAtom";
-
+import { useEffect, useState } from "react";
+import { accessTokenAtom } from "@/atoms/accessTokenAtom";
 import styles from "./home.module.scss";
+import { atom } from "jotai";
+import { AlbumCard, Card } from "@/components/basic";
 
-import Card from "@/components/basic/card/Card";
-import { Row, TrackCard } from "@/components/basic";
+const newReleasesAtom = atom();
 
 const Home = () => {
+  const accessToken = useAtom(accessTokenAtom);
   const [categories] = useAtom(runFetchGenresAtom);
-  const [savedTracks] = useAtom(runFetchSavedTracks);
-  const [song, setSong] = useAtom(playingAtom);
-  const [currentlyPlaying, setCurrentlyPlaying] = useAtom(currentlyPlayingAtom);
   const [get, update] = useAtom(updatePlayAndQueueAtom);
   const [currentPlaylist, setCurrentPlaylist] = useAtom(currentPlaylistAtom);
 
+  const [newReleases, setNewReleases] = useAtom(newReleasesAtom);
+
+  useEffect(() => {
+    fetch(
+      "https://api.spotify.com/v1/browse/new-releases?country=PL&limit=10",
+      // "https://api.spotify.com/v1/browse/featured-playlists?country=PL&locale=pl_PL&limit=10&offset=0",
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + accessToken[0].token },
+      }
+    )
+      .then((response) => {
+        if (response.ok) return setNewReleases(response.json());
+        throw new Error("Something went wrong");
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => {
+    fetch(
+      "https://api.spotify.com/v1/browse/featured-playlists?country=PL&locale=pl_PL&limit=10&offset=0",
+      {
+        method: "GET",
+        headers: { Authorization: "Bearer " + accessToken[0].token },
+      }
+    )
+      .then((response) => {
+        if (response.ok) return console.log(response.json());
+        throw new Error("Something went wrong");
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  useEffect(() => console.log(newReleases?.albums.items), [newReleases]);
+
   const playTrack = async (i) => {
-    const tempPlaylist = [];
-    savedTracks.data.items.forEach((item) => tempPlaylist.push(item.track));
-    const track = i;
-    setCurrentPlaylist({ title: "saved", url: "/saved_tracks" });
-    setCurrentlyPlaying(i);
-    update({ track, tempPlaylist });
+    // const tempPlaylist = [];
+    // savedTracks.data.items.forEach((item) => tempPlaylist.push(item.track));
+    // const track = i;
+    // setCurrentPlaylist({ title: "saved", url: "/saved_tracks" });
+    // setCurrentlyPlaying(i);
+    // update({ track, tempPlaylist });
   };
 
-  if (!savedTracks) return <>Loading...</>;
+  if (!newReleases || !categories) return <>Loading...</>;
 
   return (
     <main className={styles.main}>
@@ -43,13 +75,8 @@ const Home = () => {
       <section className={styles.section__container}>
         <h4 className={styles.section__title}>Saved tracks</h4>
         <div className={styles.section__list}>
-          {savedTracks.data?.items.map((item, i) => (
-            <TrackCard
-              i={i}
-              key={item.track.id}
-              item={item.track}
-              playTrack={playTrack}
-            />
+          {newReleases?.albums.items.map((item, i) => (
+            <AlbumCard key={item.id} item={item} />
           ))}
         </div>
       </section>

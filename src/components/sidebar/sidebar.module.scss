@@ -1,9 +1,81 @@
 .sidebar {
     width: fit-content;
+    overflow-y: auto;
+    flex-shrink: 0;
     max-width: 20vw;
     height: 100%;
-    padding: var(--spacing-m);
+    padding: 0 var(--spacing-m);
     background-color: black;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    .list__container {
+        background-color: black;
+        display: flex;
+        position: sticky;
+        top: 0;
+        flex-direction: column;
+        padding-top: var(--spacing-xl);
+        gap: var(--spacing-m);
+        .list__button {
+            color: var(--white-70);
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+            padding: var(--spacing-s);
+            text-align: left;
+            border-radius: 15px;
+            -webkit-border-radius: 15px;
+            -moz-border-radius: 15px;
+            -ms-border-radius: 15px;
+            -o-border-radius: 15px;
+            -webkit-transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+            -moz-transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+            -ms-transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+            -o-transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
+            &:hover {
+                color: white;
+            }
+            .list__icon {
+                margin-right: var(--spacing-s);
+            }
+        }
+    }
+    .playlists__wrapper {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .playlists__link {
+            font-size: var(--text-xs);
+            display: block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: var(--spacing-s) var(--spacing-m);
+            text-align: left;
+            color: var(--white-70);
+            transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            -webkit-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            -moz-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            -ms-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            -o-transition: all 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+            &:hover {
+                color: white;
+            }
+        }
+    }
+    .divider {
+        color: var(--white-70);
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -24,32 +96,6 @@
 
 .logo {
     height: 36px;
-}
-
-.list__container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-m);
-}
-
-.list__button {
-    transition: all cubic-bezier(0.39, 0.575, 0.565, 1);
-    padding: var(--spacing-m) var(--spacing-l);
-    text-align: left;
-    background-color: transparent;
-    border-radius: 15px;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    -ms-border-radius: 15px;
-    -o-border-radius: 15px;
-    -webkit-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    -moz-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    -ms-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    -o-transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-    &:hover {
-        background-color: var(--main-transp);
-        color: black;
-    }
 }
 
 .toggle__button {

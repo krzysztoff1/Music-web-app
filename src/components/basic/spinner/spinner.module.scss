@@ -1,0 +1,25 @@
+.container {
+    width: 100%;
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    .icon {
+        opacity: 0.5;
+        color: white;
+        margin: 10rem;
+        animation-name: spin;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

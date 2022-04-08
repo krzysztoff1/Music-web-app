@@ -86,11 +86,12 @@ const Player = () => {
                 }
                 alt="cover"
               />
-              <div>
-                <b className="truncate">
+              <div className={styles.title__container}>
+                <b className={styles.title}>
                   {data.tempPlaylist[currentlyPlaying]?.name}{" "}
                 </b>
                 <Link
+                  className={styles.artist}
                   to={`/artists/${data.tempPlaylist[currentlyPlaying]?.artists[0].id}`}
                 >
                   {data.tempPlaylist[currentlyPlaying]?.artists[0].name}

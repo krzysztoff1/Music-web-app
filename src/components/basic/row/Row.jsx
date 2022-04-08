@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
 import { FaEllipsisH } from "react-icons/fa";
 import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
-import { useEffect } from "react";
 
 const queueAtom = atom();
 
@@ -51,22 +50,33 @@ const Row = ({ item, i, playTrack, playlistTitle, url }) => {
           <div className={styles.animation__column} />
         </div>
       ) : (
-        <p className={styles.track__index}>{i + 1}</p>
+        <div className={styles.track__index__container}>
+          <p className={styles.track__index}>{i + 1}</p>
+        </div>
       )}
-      <b
-        style={{
-          color: `${
-            currentPlaylist?.title === playlistTitle && currentlyPlaying === i
-              ? "#0be881"
-              : "white"
-          }`,
-        }}
-      >
-        {item.track.name}
-      </b>
-      <Link to={`/artists/${item.track.artists[0].id}`}>
-        <p>{item.track.artists[0].name}</p>
-      </Link>
+      <div className={styles.track__name__container}>
+        <b
+          className={styles.track__name}
+          style={{
+            color: `${
+              currentPlaylist?.title === playlistTitle && currentlyPlaying === i
+                ? "#0be881"
+                : "white"
+            }`,
+          }}
+        >
+          {item.name}
+        </b>
+      </div>
+      <div className={styles.track__artist__container}>
+        <Link
+          className={styles.track__artist}
+          onClick={(e) => e.stopPropagation()}
+          to={`/artists/${item.artists[0].id}`}
+        >
+          <p>{item.artists[0].name}</p>
+        </Link>
+      </div>
       <button onClick={addToQueue} className={styles.more}>
         <FaEllipsisH className={styles.icon} />
       </button>

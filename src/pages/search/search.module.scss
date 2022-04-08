@@ -1,0 +1,20 @@
+.main {
+    width: 100%;
+    overflow: hidden;
+    overflow: auto;
+    position: relative;
+    .header {
+        padding: var(--spacing-xl);
+        .input__container {
+            margin-top: var(--spacing-m);
+            display: flex;
+            .input {
+                margin-right: var(--spacing-m);
+                max-width: 15rem !important;
+            }
+        }
+    }
+    .list__section {
+        margin: var(--spacing-xl);
+    }
+}

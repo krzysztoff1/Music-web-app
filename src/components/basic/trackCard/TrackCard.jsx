@@ -35,7 +35,7 @@ const TrackCard = ({ item, i, playTrack, playlistTitle, url }) => {
         backgroundImage: `url(${item.album.images[1].url})`,
       }}
       className={styles.card}
-    ></article>
+    />
   );
 };
 
