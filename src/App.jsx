@@ -6,7 +6,7 @@ import { useAtom } from "jotai";
 import { accessTokenAtom } from "./atoms/accessTokenAtom";
 
 import { LogIn, Player, Sidebar } from "./components";
-import { SavedTracks, Artists, Home, Search } from "./pages";
+import { SavedTracks, Artists, Home, Search, Album } from "./pages";
 
 function App() {
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
@@ -59,6 +59,7 @@ function App() {
           <Route path="/saved_tracks" element={<SavedTracks />} />
           <Route path="/artists/:id" element={<Artists />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/album/:id" element={<Album />} />
         </Routes>
       </section>
       <Player />

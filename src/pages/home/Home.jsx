@@ -1,11 +1,10 @@
-import { useAtom } from "jotai";
+import { useAtom, atom } from "jotai";
 import { runFetchGenresAtom } from "@/atoms/genresAtom";
-import { updatePlayAndQueueAtom } from "@/atoms/playAndQueueAtom";
+import { updatePlayAndQueueAtom } from "@/atoms/currentlyPlayingAtom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { accessTokenAtom } from "@/atoms/accessTokenAtom";
 import styles from "./home.module.scss";
-import { atom } from "jotai";
 import { AlbumCard, Card } from "@/components/basic";
 
 const newReleasesAtom = atom();
@@ -34,22 +33,20 @@ const Home = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  useEffect(() => {
-    fetch(
-      "https://api.spotify.com/v1/browse/featured-playlists?country=PL&locale=pl_PL&limit=10&offset=0",
-      {
-        method: "GET",
-        headers: { Authorization: "Bearer " + accessToken[0].token },
-      }
-    )
-      .then((response) => {
-        if (response.ok) return console.log(response.json());
-        throw new Error("Something went wrong");
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
-  useEffect(() => console.log(newReleases?.albums.items), [newReleases]);
+  // useEffect(() => {
+  //   fetch(
+  //     "https://api.spotify.com/v1/browse/featured-playlists?country=PL&locale=pl_PL&limit=10&offset=0",
+  //     {
+  //       method: "GET",
+  //       headers: { Authorization: "Bearer " + accessToken[0].token },
+  //     }
+  //   )
+  //     .then((response) => {
+  //       if (response.ok) return console.log(response.json());
+  //       throw new Error("Something went wrong");
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   const playTrack = async (i) => {
     // const tempPlaylist = [];
@@ -73,7 +70,7 @@ const Home = () => {
         </div>
       </section>
       <section className={styles.section__container}>
-        <h4 className={styles.section__title}>Saved tracks</h4>
+        <h4 className={styles.section__title}>Recommendations</h4>
         <div className={styles.section__list}>
           {newReleases?.albums.items.map((item, i) => (
             <AlbumCard key={item.id} item={item} />

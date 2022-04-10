@@ -1,22 +1,18 @@
 import styles from "./row.module.scss";
 import { atom, useAtom } from "jotai";
-import { controlCurrentlyPlaying } from "@/atoms/currentlyPlayingAtom";
+import { currentlyPlayingIdAtom } from "@/atoms/currentlyPlayingAtom";
 import { playControlAtom } from "@/atoms/playControlAtom";
 import { Link } from "react-router-dom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
 import { FaEllipsisH } from "react-icons/fa";
-import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
 
 const queueAtom = atom();
 
 const Row = ({ item, i, playTrack, playlistTitle, url }) => {
-  const [currentlyPlaying, setCurrentlyPlaying] = useAtom(
-    controlCurrentlyPlaying
-  );
+  const [currentId] = useAtom(currentlyPlayingIdAtom);
   const [playControl] = useAtom(playControlAtom);
   const [currentPlaylist, setCurrentPlaylist] = useAtom(currentPlaylistAtom);
-  const [data, setData] = useAtom(playAndQueueAtom);
-  const [queue, setQueue] = useAtom(queueAtom);
+  const index = i;
 
   const addToQueue = (e) => {
     e.stopPropagation();
@@ -33,16 +29,17 @@ const Row = ({ item, i, playTrack, playlistTitle, url }) => {
   return (
     <article
       onClick={() => {
-        playTrack(i);
+        playTrack({ item, index });
         setCurrentPlaylist({
           title: playlistTitle,
           url: url,
         });
       }}
+      style={{ opacity: item.preview_url ? "1" : "0.7" }}
       className={styles.row}
     >
       {currentPlaylist?.title === playlistTitle &&
-      currentlyPlaying === i &&
+      currentId === item.id &&
       playControl ? (
         <div className={styles.animation__container}>
           <div className={styles.animation__column} />
@@ -59,7 +56,7 @@ const Row = ({ item, i, playTrack, playlistTitle, url }) => {
           className={styles.track__name}
           style={{
             color: `${
-              currentPlaylist?.title === playlistTitle && currentlyPlaying === i
+              currentPlaylist?.title === playlistTitle && currentId === item.id
                 ? "#0be881"
                 : "white"
             }`,

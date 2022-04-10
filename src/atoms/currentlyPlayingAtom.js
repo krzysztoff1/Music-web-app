@@ -1,14 +1,29 @@
 import { atom } from "jotai";
 
-export const currentlyPlayingAtom = atom();
+export const currentlyPlayingIdAtom = atom();
 
-export const controlCurrentlyPlaying = atom(
-  (get) => get(currentlyPlayingAtom),
-  (get, set, action) => {
+export const currentlyPlayingIndexAtom = atom();
+export const controlCurrentlyPlayingIndex = atom(
+  (get) => get(currentlyPlayingIndexAtom),
+  (_get, set, action) => {
     if (action.type === "next") {
-      set(currentlyPlayingAtom, (c) => c + 1);
+      set(currentlyPlayingIndexAtom, (c) => c + 1);
     } else if (action.type === "prev") {
-      set(currentlyPlayingAtom, (c) => c - 1);
+      set(currentlyPlayingIndexAtom, (c) => c - 1);
     }
+  }
+);
+
+export const playAndQueueAtom = atom({
+  tempPlaylist: [],
+});
+
+export const updatePlayAndQueueAtom = atom(
+  (get) => get(playAndQueueAtom),
+  async (_get, set, props) => {
+    set(playAndQueueAtom, {
+      currentTrack: props.track,
+      tempPlaylist: props.tempPlaylist,
+    });
   }
 );

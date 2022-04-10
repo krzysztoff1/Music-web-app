@@ -1,7 +1,8 @@
 .main {
-    overflow: hidden;
     overflow: auto;
+    padding-bottom: 80px;
     position: relative;
+    width: 100%;
     .header {
         width: 100%;
         display: flex;
@@ -22,14 +23,21 @@
         .header__text {
             z-index: 20;
             width: 100%;
-            padding-top: 10rem;
-            padding: 10rem var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+            padding: 16rem var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
         }
     }
     .list__section {
         padding: var(--spacing-xl);
         .list__section__subtitle {
             margin-bottom: var(--spacing-m);
+        }
+        .section__footer {
+            display: flex;
+            justify-content: center;
+            .footer__button {
+                margin-top: var(--spacing-m);
+                padding: var(--spacing-s);
+            }
         }
     }
     .cards__container {

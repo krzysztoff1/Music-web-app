@@ -2,8 +2,8 @@ import { atom } from "jotai";
 import { accessTokenAtom } from "./accessTokenAtom";
 
 export const savedTracksOffset = atom(0);
-const fetchSavedTracks = atom();
 
+const fetchSavedTracks = atom();
 export const runFetchSavedTracks = atom(
   (get) => get(fetchSavedTracks),
   (get, set) => {
@@ -18,8 +18,8 @@ export const runFetchSavedTracks = atom(
             headers: { Authorization: "Bearer " + token.token },
           }
         );
-        const data = await response.json();
-        set(fetchSavedTracks, data);
+        const res = await response.json();
+        set(fetchSavedTracks, res);
       } catch (error) {
         console.error(error);
       }

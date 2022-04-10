@@ -1,23 +1,28 @@
 import { useState, useEffect } from "react";
 import styles from "./search.module.scss";
-import { useAtom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { accessTokenAtom } from "@/atoms/accessTokenAtom";
 import { Row } from "@/components/basic";
-import { atom } from "jotai";
-import { currentlyPlayingAtom } from "@/atoms/currentlyPlayingAtom";
+import { currentlyPlayingIndexAtom } from "@/atoms/currentlyPlayingAtom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
-import { updatePlayAndQueueAtom } from "@/atoms/playAndQueueAtom";
+import { updatePlayAndQueueAtom } from "@/atoms/currentlyPlayingAtom";
 
 const resultsAtom = atom();
 const queryAtom = atom();
 
 const Search = () => {
   const [currentPlaylist, setCurrentPlaylist] = useAtom(currentPlaylistAtom);
-  const [currentlyPlaying, setCurrentlyPlaying] = useAtom(currentlyPlayingAtom);
+  const [currentlyPlaying, setCurrentlyPlaying] = useAtom(
+    currentlyPlayingIndexAtom
+  );
   const [get, update] = useAtom(updatePlayAndQueueAtom);
   const accessToken = useAtom(accessTokenAtom);
   const [results, setResults] = useAtom(resultsAtom);
   const [query, setQuery] = useAtom(queryAtom);
+
+  useEffect(() => {
+    if (query) handleSubmit();
+  }, [JSON.stringify(query)]);
 
   const handleSubmit = async () => {
     try {

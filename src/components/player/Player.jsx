@@ -9,19 +9,29 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 import styles from "./player.module.scss";
-import { playAndQueueAtom } from "@/atoms/playAndQueueAtom";
-import { controlCurrentlyPlaying } from "@/atoms/currentlyPlayingAtom";
+import {
+  playAndQueueAtom,
+  controlCurrentlyPlayingIndex,
+  currentlyPlayingIdAtom,
+} from "@/atoms/currentlyPlayingAtom";
 import { playControlAtom } from "@/atoms/playControlAtom";
 
 const Player = () => {
   const [playing, setPlaying] = useAtom(playControlAtom);
   const [data] = useAtom(playAndQueueAtom);
   const [currentlyPlaying, setCurrentlyPlaying] = useAtom(
-    controlCurrentlyPlaying
+    controlCurrentlyPlayingIndex
   );
+  const [currentId, setCurrentId] = useAtom(currentlyPlayingIdAtom);
   const audioRef = useRef();
   const progressBar = useRef();
   const volumeRef = useRef();
+
+  useEffect(
+    () =>
+      currentlyPlaying && setCurrentId(data.tempPlaylist[currentlyPlaying].id),
+    [JSON.stringify(currentlyPlaying)]
+  );
 
   useEffect(() => {
     if (!data.tempPlaylist[currentlyPlaying]?.preview_url) {
@@ -34,7 +44,7 @@ const Player = () => {
       return;
     }
     play();
-  }, [currentlyPlaying]);
+  }, [JSON.stringify(currentlyPlaying)]);
 
   const handlePlay = () => {
     if (playing || !data.tempPlaylist[currentlyPlaying]?.preview_url) {
@@ -55,14 +65,14 @@ const Player = () => {
   };
 
   const prevTrack = () => {
-    if (currentlyPlaying + 1 < data.tempPlaylist.length) {
-      setCurrentlyPlaying({ type: "next" });
+    if (currentlyPlaying > 0) {
+      setCurrentlyPlaying({ type: "prev" });
     }
   };
 
   const nextTrack = () => {
-    if (currentlyPlaying > 0) {
-      setCurrentlyPlaying({ type: "prev" });
+    if (currentlyPlaying + 1 < data.tempPlaylist.length) {
+      setCurrentlyPlaying({ type: "next" });
     }
   };
 
@@ -75,7 +85,7 @@ const Player = () => {
     <footer className={styles.container}>
       <div className={styles.item__container}>
         <div className={styles.item__left}>
-          {data.tempPlaylist && (
+          {currentlyPlaying && (
             <>
               <img
                 className={styles.cover}
@@ -112,13 +122,13 @@ const Player = () => {
           />
           <div className={styles.controls}>
             <button type="button">
-              <FaArrowLeft onClick={nextTrack} />
+              <FaArrowLeft onClick={prevTrack} />
             </button>
             <button onClick={handlePlay} type="button">
               {!playing ? <FaPlay /> : <FaPause />}
             </button>
             <button type="button">
-              <FaArrowRight onClick={prevTrack} />
+              <FaArrowRight onClick={nextTrack} />
             </button>
           </div>
           <input

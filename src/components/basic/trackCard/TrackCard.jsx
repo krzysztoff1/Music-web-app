@@ -1,6 +1,6 @@
 import styles from "./trackCard.module.scss";
 import { atom, useAtom } from "jotai";
-import { controlCurrentlyPlaying } from "@/atoms/currentlyPlayingAtom";
+import { controlCurrentlyPlayingIndex } from "@/atoms/currentlyPlayingAtom";
 import { currentPlaylistAtom } from "@/atoms/currentPlaylistAtom";
 import { useEffect } from "react";
 
@@ -8,13 +8,13 @@ const queueAtom = atom();
 
 const TrackCard = ({ item, i, playTrack, playlistTitle, url }) => {
   const [currentlyPlaying, setCurrentlyPlaying] = useAtom(
-    controlCurrentlyPlaying
+    controlCurrentlyPlayingIndex
   );
   const [currentPlaylist, setCurrentPlaylist] = useAtom(currentPlaylistAtom);
 
   useEffect(() => {
     console.log(currentlyPlaying);
-  }, [currentlyPlaying]);
+  }, [JSON.stringify(currentlyPlaying)]);
 
   return (
     <article

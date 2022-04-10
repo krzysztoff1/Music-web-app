@@ -27,11 +27,12 @@ const AlbumCard = ({ item }) => {
           <motion.div
             onClick={handlePlay}
             initial={false}
-            transition={{ duration: "0.2s", type: "spring" }}
+            whileHover={{ scale: 1.05 }}
             animate={{
               opacity: isHovered ? 1 : 0,
-              translateY: isHovered ? -10 : 20,
+              translateY: isHovered ? -5 : 20,
             }}
+            transition={{ duration: 0.4, type: "spring" }}
             className={styles.play__container}
           >
             <FaPlay className={styles.play} />

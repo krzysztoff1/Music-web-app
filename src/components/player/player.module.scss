@@ -1,10 +1,20 @@
+@supports ( (-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
+    .container {
+        background: rgba(0, 0, 0, 0.58);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+}
+
 .container {
+    position: fixed;
+    bottom: 0;
     height: 80px;
     width: 100vw;
     padding: var(--spacing-l);
     display: flex;
     justify-content: space-between;
-    background-color: black;
     .item__container {
         width: calc(100% / 3);
         .item__left {
@@ -42,13 +52,5 @@
                 justify-content: center;
             }
         }
-    }
-}
-
-@supports ( (-webkit-backdrop-filter: blur(2em)) or (backdrop-filter: blur(2em))) {
-    .container {
-        -webkit-backdrop-filter: blur(20px);
-        backdrop-filter: blur(20px);
-        background-color: rgba(0, 0, 0, 0.1);
     }
 }

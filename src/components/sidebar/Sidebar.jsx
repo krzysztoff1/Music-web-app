@@ -1,12 +1,20 @@
-import { FaHome, FaHeart, FaPodcast, FaSearch } from "react-icons/fa";
+import {
+  FaHome,
+  FaHeart,
+  FaPodcast,
+  FaSearch,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { runUsersPlaylists } from "@/atoms/usersPlaylists";
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import styles from "./sidebar.module.scss";
+import { accessTokenAtom } from "@/atoms/accessTokenAtom";
 
 const Sidebar = () => {
   const [playlists] = useAtom(runUsersPlaylists);
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
 
   const pages = [
     { title: "Home", icon: <FaHome />, url: "/" },
@@ -31,18 +39,29 @@ const Sidebar = () => {
         </svg>
       </button>
       <nav className={styles.sidebar}>
+        <div className={styles.logo}></div>
         <div className={styles.list__container}>
           {pages.map((item) => (
             <Link
               to={item.url}
               key={item.title}
-              type="button"
               className={styles.list__button}
             >
               <div className={styles.list__icon}>{item.icon}</div>
               {item.title}
             </Link>
           ))}
+          <Link
+            to={"/"}
+            onClick={() => setAccessToken()}
+            type="button"
+            className={styles.list__button}
+          >
+            <div className={styles.list__icon}>
+              <FaSignOutAlt />
+            </div>
+            Log out
+          </Link>
           <hr className={styles.divider} />
         </div>
         <div>

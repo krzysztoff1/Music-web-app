@@ -1,3 +1,7 @@
+body {
+    background-color: black;
+}
+
 .layout {
     width: 100vw;
     height: 100vh;
@@ -7,4 +11,5 @@
 .main {
     display: flex;
     height: calc(100vh - 80px);
+    height: 100vh;
 }
